@@ -1,0 +1,6 @@
+#!/bin/bash
+source /root/.profile
+
+sed -e "s/^127.0.0.1.*$/127.0.0.1 localhost $(hostname)/" /etc/hosts > /etc/hosts.new && mv /etc/hosts.new /etc/hosts
+
+exec /opt/hbase-0.94.10/bin/hbase master start 2>&1 | tee /var/log/hbase.log
