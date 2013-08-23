@@ -8,7 +8,8 @@ FROM ubuntu
 MAINTAINER Dave Beckett <dave@dajobe.org>
 
 # make sure the package repository is up to date
-RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
+RUN sed 's/main$/main universe/' -i /etc/apt/sources.list
+
 RUN DEBIAN_FRONTEND=noninteractive apt-get update
 
 # Install build requirements
