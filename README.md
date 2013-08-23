@@ -5,10 +5,21 @@ This configuration builds a docker container to run HBase (with
 embedded Zookeeper) running on the files inside the container.
 
 
-Build
------
+Build Image
+-----------
 
 	$ docker build -t dajobe/hbase .
+
+
+Pull image
+----------
+
+If you want to pull the image already built then use this
+
+    $ docker pull dajobe/hbase
+	
+More details at https://index.docker.io/u/dajobe/hbase/
+
 
 Run HBase
 ---------
@@ -27,6 +38,13 @@ Construct the URLs to check it out:
 
 See HBase Logs
 --------------
+
+I haven't figured this one out apart from
+
+    $ docker attach $id
+
+Then ^C to detach.  You can't scroll back the logs or see the
+internal log file at `/var/log/hbase.log`
 
 
 Proxy HBase UI locally
@@ -53,6 +71,7 @@ The bottom line, you can use these URLs to see what's going on:
 to see what's going on in the container and since both your local
 machine and the container are using localhost (aka 127.0.0.1), even
 the links work!
+
 
 Notes
 -----
