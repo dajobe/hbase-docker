@@ -39,12 +39,17 @@ Construct the URLs to check it out:
 See HBase Logs
 --------------
 
-I haven't figured this one out apart from
+If you want to see the latest logs live use:
 
     $ docker attach $id
 
-Then ^C to detach.  You can't scroll back the logs or see the
-internal log file at `/var/log/hbase.log`
+Then ^C to detach.
+
+To see all the logs since the HBase server started, use:
+
+    $ docker logs $id
+
+and ^C to detach again.
 
 
 Proxy HBase UI locally
