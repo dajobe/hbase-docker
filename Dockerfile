@@ -29,6 +29,10 @@ ADD hbase-site.xml /opt/hbase-0.94.11/conf/hbase-site.xml
 
 ADD hbase-server /opt/hbase-server
 
+# Thrift API
+EXPOSE 9090
+# Thrift Web UI
+EXPOSE 9095
 # HBase uses it's own internal zookeeper; no need to expose it?
 # EXPOSE 2181
 # HBase Master status at :60010/master-status
