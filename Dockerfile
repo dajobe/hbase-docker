@@ -12,9 +12,8 @@ RUN sed 's/main$/main universe/' -i /etc/apt/sources.list
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update
-
 # Install build requirements
+RUN apt-get update
 RUN apt-get install -y build-essential curl openjdk-6-jdk
 
 RUN mkdir -p /opt/downloads && cd /opt/downloads && curl -SsfLO "http://www.apache.org/dist/hbase/hbase-0.94.11/hbase-0.94.11.tar.gz"
