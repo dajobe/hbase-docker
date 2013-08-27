@@ -1,2 +1,4 @@
 # Set up envariables
 export JAVA_HOME=/usr/lib/jvm/java-6-openjdk-amd64
+
+HBASE_VERSION=0.94.11
