@@ -10,11 +10,12 @@ MAINTAINER Dave Beckett <dave@dajobe.org>
 # make sure the package repository is up to date
 RUN sed 's/main$/main universe/' -i /etc/apt/sources.list
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update
 
 # Install build requirements
-# DEBIAN_FRONTEND=noninteractive
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl build-essential openjdk-6-jdk
+RUN apt-get install -y build-essential curl openjdk-6-jdk
 
 RUN mkdir -p /opt/downloads && cd /opt/downloads && curl -SsfLO "http://www.apache.org/dist/hbase/hbase-0.94.11/hbase-0.94.11.tar.gz"
 RUN cd /opt && tar xvfz /opt/downloads/hbase-0.94.11.tar.gz
