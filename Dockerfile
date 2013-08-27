@@ -24,7 +24,6 @@ RUN mkdir -p /data/hbase
 
 ADD root-profile /root/.profile
 
-RUN mkdir -p /opt/hbase-0.94.11/conf
 ADD hbase-site.xml /opt/hbase-0.94.11/conf/hbase-site.xml
 
 ADD hbase-server /opt/hbase-server
