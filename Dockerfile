@@ -34,9 +34,13 @@ EXPOSE 9090
 EXPOSE 9095
 # HBase uses it's own internal zookeeper; no need to expose it?
 # EXPOSE 2181
-# HBase Master status at :60010/master-status
+# HBase Master API port
+EXPOSE 60000
+# HBase Master web UI at :60010/master-status;  ZK at :60010/zk.jsp
 EXPOSE 60010
-# HBase Region server at :60030/rs-status
+# Region server API port
+EXPOSE 60020
+# HBase Region server web UI at :60030/rs-status
 EXPOSE 60030
 
 CMD ["/opt/hbase-server"]
