@@ -1,12 +1,15 @@
 #!/bin/bash
+# Start HBase
+#  1) thrift API/Web UI
+#  2) hbase master (which runs the local region server)
+
 source /root/.profile
 
 sed "s/^127.0.0.1.*$/127.0.0.1 localhost $(hostname)/" -i /etc/hosts
 
-# Thrift server listens on port 9090 (API) and 9095 (web UI)
-/opt/hbase-$HBASE_VERSION/bin/hbase thrift start > /var/log/hbase-thrift.log 2>&1 &
+HBASE_SERVER=/opt/hbase-$HBASE_VERSION/bin/hbase
 
 # Thrift server listens on port 9090 (API) and 9095 (web UI)
-/opt/hbase-$HBASE_VERSION/bin/hbase thrift start > /var/log/hbase-thrift.log 2>&1 &
+$HBASE_SERVER thrift start > /var/log/hbase-thrift.log 2>&1 &
 
-exec /opt/hbase-$HBASE_VERSION/bin/hbase master start 2>&1 | tee /var/log/hbase.log
+exec $HBASE_SERVER master start 2>&1 | tee /var/log/hbase.log
