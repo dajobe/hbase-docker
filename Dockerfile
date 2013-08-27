@@ -16,15 +16,22 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 RUN apt-get install -y build-essential curl openjdk-6-jdk
 
-RUN mkdir -p /opt/downloads && cd /opt/downloads && curl -SsfLO "http://www.apache.org/dist/hbase/hbase-0.94.11/hbase-0.94.11.tar.gz"
-RUN cd /opt && tar xvfz /opt/downloads/hbase-0.94.11.tar.gz
+# Download and Install HBase
+ENV HBASE_VERSION 0.94.11
+
+RUN mkdir -p /opt/downloads && cd /opt/downloads && curl -SsfLO "http://www.apache.org/dist/hbase/hbase-$HBASE_VERSION/hbase-$HBASE_VERSION.tar.gz"
+RUN cd /opt && tar xvfz /opt/downloads/hbase-$HBASE_VERSION.tar.gz
+RUN mv /opt/hbase-$HBASE_VERSION /opt/hbase
 
 # Data will go here (see hbase-site.xml)
-RUN mkdir -p /data/hbase
+RUN mkdir -p /data/hbase /opt/hbase/logs
+
+ENV JAVA_HOME /usr/lib/jvm/java-6-openjdk-amd64
+ENV HBASE_SERVER /opt/hbase/bin/hbase
 
 ADD ./hbase-site.xml /opt/hbase/conf/hbase-site.xml
 
-ADD hbase-site.xml /opt/hbase-0.94.11/conf/hbase-site.xml
+ADD ./hbase-server /opt/hbase-server
 
 
 # Thrift API

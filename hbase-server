@@ -5,9 +5,10 @@
 
 sed "s/^127.0.0.1.*$/127.0.0.1 localhost $(hostname)/" -i /etc/hosts
 
-HBASE_SERVER=/opt/hbase-$HBASE_VERSION/bin/hbase
+# Thrift server (background)
+# Ports: 9090 API and 9095 UI
+$HBASE_SERVER thrift start > /opt/hbase/logs/hbase-thrift.log 2>&1 &
 
-# Thrift server listens on port 9090 (API) and 9095 (web UI)
-$HBASE_SERVER thrift start > /var/log/hbase-thrift.log 2>&1 &
-
-exec $HBASE_SERVER master start 2>&1 | tee /var/log/hbase.log
+# Master server (Foreground) that also starts the region server
+# Ports: Master: 60000 API, 60010 UI; 2181 ZK;  Region: 60020 API, 60030 UI
+exec $HBASE_SERVER master start 2>&1 | tee /opt/hbase/logs/hbase-master.log
