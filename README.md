@@ -66,7 +66,7 @@ Test HBase is working via python over Thrift
 
 Here I am using a remote docker machine called `precise` which could
 be `localhost` if I was running this locally.  The port is the
-`$thrift_api_port` because happybase[1] uses Thrift to talk to HBase.
+`$thrift_api_port` because [Happybase][1] [2] uses Thrift to talk to HBase.
 
 	$ python
 	Python 2.7.2 (default, Oct 11 2012, 20:14:37)
@@ -131,3 +131,5 @@ Although there is an embedded zookeeper running on the server on port
 2181 it is not being forwarded.
 
 [1] http://happybase.readthedocs.org/en/latest/
+
+[2] https://github.com/wbolster/happybase
