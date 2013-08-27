@@ -22,11 +22,10 @@ RUN cd /opt && tar xvfz /opt/downloads/hbase-0.94.11.tar.gz
 # Data will go here (see hbase-site.xml)
 RUN mkdir -p /data/hbase
 
-ADD root-profile /root/.profile
+ADD ./hbase-site.xml /opt/hbase/conf/hbase-site.xml
 
 ADD hbase-site.xml /opt/hbase-0.94.11/conf/hbase-site.xml
 
-ADD hbase-server /opt/hbase-server
 
 # Thrift API
 EXPOSE 9090

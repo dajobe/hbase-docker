@@ -3,8 +3,6 @@
 #  1) thrift API/Web UI
 #  2) hbase master (which runs the local region server)
 
-source /root/.profile
-
 sed "s/^127.0.0.1.*$/127.0.0.1 localhost $(hostname)/" -i /etc/hosts
 
 HBASE_SERVER=/opt/hbase-$HBASE_VERSION/bin/hbase
