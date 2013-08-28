@@ -4,6 +4,18 @@ HBase in Docker
 This configuration builds a docker container to run HBase (with
 embedded Zookeeper) running on the files inside the container.
 
+NOTE
+----
+
+The current approach requires editing the local server's `/etc/hosts`
+file to add an entry for the container hostname.  This is because
+HBase uses hostnames to pass connection data back out of the
+container (from it's internal Zookeeper).
+
+Hopefully this can be fixed when newer Docker allows more advanced
+networking such as fixed IPs or dynamic registration of name/IP
+mappings (avahi?).
+
 
 Build Image
 -----------
@@ -24,7 +36,20 @@ More details at https://index.docker.io/u/dajobe/hbase/
 Run HBase
 ---------
 
+To run it without much utility use (NOT recommended):
+
     $ id=$(docker run -d dajobe/hbase)
+
+To run it and proxy the ports locally and update `/etc/hosts`:
+
+    $ ./start-hbase.sh
+
+This will require you to enter your sudo password to edit /etc/hosts
+and add an entry for a host called 'hbase-docker'.
+
+
+Find Hbase status
+-----------------
 
 Find out the web UI ports:
 
@@ -39,11 +64,16 @@ Construct the URLs to check it out:
 	$ echo "http://$host:$region_ui_port/rs-status"
 	$ echo "http://$host:$thrift_ui_port/thrift.jsp"
 
-Find out the API ports:
+With the raw `docker run` the API ports can be found at:
 
 	$ master_api_port=$(docker port $id 60000)
 	$ region_api_port=$(docker port $id 60020)
 	$ thrift_api_port=$(docker port $id 9090)
+	$ zk_api_port=$(docker port $id 2181)
+
+With `start-hbase.sh` they are always the same local ones: 60000,
+60020 and 9090 which HBase expects.
+
 
 See HBase Logs
 --------------
@@ -59,6 +89,10 @@ To see all the logs since the HBase server started, use:
     $ docker logs $id
 
 and ^C to detach again.
+
+To see the hbase thrift and server logs; use `start-hbase.sh` and
+they will be written to the local directory `logs/` using a volume
+mapping.
 
 
 Test HBase is working via python over Thrift
@@ -87,6 +121,28 @@ be `localhost` if I was running this locally.  The port is the
 
 (Simple install for happybase: `sudo pip install happybase` although I
 use `pip install --user happybase` to get it just for me)
+
+
+Test HBase is working from Java
+-------------------------------
+
+This requires using the `start-hbase.sh` approach and running in the
+HBase source tree (might require `JAVA_HOME` to be set).
+
+	$ bin/hbase shell
+	HBase Shell; enter 'help<RETURN>' for list of supported commands.
+	Type "exit<RETURN>" to leave the HBase Shell
+	Version 0.94.11, r1513697, Wed Aug 14 04:54:46 UTC 2013
+
+	hbase(main):001:0> status
+	1 servers, 0 dead, 3.0000 average load
+
+	hbase(main):002:0> list
+	TABLE
+	table-name
+	1 row(s) in 0.0460 seconds
+
+Showing the `table-name` table made in the happybase example above.
 
 
 Proxy HBase UIs locally
@@ -126,9 +182,6 @@ the links work!
 
 Notes
 -----
-
-Although there is an embedded zookeeper running on the server on port
-2181 it is not being forwarded.
 
 [1] http://happybase.readthedocs.org/en/latest/
 
