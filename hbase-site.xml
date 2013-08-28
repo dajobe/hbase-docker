@@ -2,21 +2,35 @@
 <configuration>
 
   <property>
+     <name>hbase.zookeeper.quorum</name>
+     <value>@IP@</value>
+  </property>
+  <property>
     <name>hbase.rootdir</name>
     <value>file:////data/hbase</value>
   </property>
 
   <property>
-    <name>hbase.zookeeper.dns.interface</name>
-    <value>lo</value>
+    <name>hbase.master.dns.interface</name>
+    <value>eth0</value>
   </property>
+  <property>
+    <name>hbase.master.ipc.address</name>
+    <value>@IP@</value>
+  </property>
+
   <property>
     <name>hbase.regionserver.dns.interface</name>
-    <value>lo</value>
+    <value>eth0</value>
   </property>
   <property>
-    <name>hbase.master.dns.interface</name>
-    <value>lo</value>
+    <name>hbase.regionserver.ipc.address</name>
+    <value>@IP@</value>
+  </property>
+
+  <property>
+    <name>hbase.zookeeper.dns.interface</name>
+    <value>eth0</value>
   </property>
 
 </configuration>

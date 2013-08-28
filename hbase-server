@@ -3,7 +3,13 @@
 #  1) thrift API/Web UI
 #  2) hbase master (which runs the local region server)
 
-sed "s/^127.0.0.1.*$/127.0.0.1 localhost $(hostname)/" -i /etc/hosts
+IP=`ip addr show eth0 | grep 'inet ' | cut -d/ -f1 | awk '{print $2}'`
+
+sed -i "s/@IP@/$IP/g" /opt/hbase/conf/hbase-site.xml
+
+sed -i "s/@IP@/$IP/g" /opt/hbase/conf/zoo.cfg
+
+echo "$IP $(hostname)" >> /etc/hosts
 
 # Thrift server (background)
 # Ports: 9090 API and 9095 UI

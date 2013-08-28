@@ -1,6 +1,6 @@
-# HBase
+# HBase in Docker
 #
-# Version 0.1
+# Version 0.2
 
 # http://docs.docker.io/en/latest/use/builder/
 
@@ -31,6 +31,8 @@ ENV HBASE_SERVER /opt/hbase/bin/hbase
 
 ADD ./hbase-site.xml /opt/hbase/conf/hbase-site.xml
 
+ADD ./zoo.cfg /opt/hbase/conf/zoo.cfg
+
 ADD ./hbase-server /opt/hbase-server
 
 
@@ -38,8 +40,8 @@ ADD ./hbase-server /opt/hbase-server
 EXPOSE 9090
 # Thrift Web UI
 EXPOSE 9095
-# HBase uses it's own internal zookeeper; no need to expose it?
-# EXPOSE 2181
+# HBase's zookeeper - used to find servers
+EXPOSE 2181
 # HBase Master API port
 EXPOSE 60000
 # HBase Master web UI at :60010/master-status;  ZK at :60010/zk.jsp
