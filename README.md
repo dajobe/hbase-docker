@@ -167,8 +167,8 @@ you restart docker because the ports will have changed.
 
 The bottom line, you can use these URLs to see what's going on:
 
-  * http://localhost:60030/master-status for the Master Server
-  * http://localhost:60010/rs-status for Region Server
+  * http://localhost:60010/master-status for the Master Server
+  * http://localhost:60030/rs-status for Region Server
   * http://localhost:9095/thrift.jsp for the thrift UI
   * http://localhost:60030/zk.jsp for the embedded Zookeeper
 
