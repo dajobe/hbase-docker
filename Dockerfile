@@ -14,19 +14,20 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Install build requirements
 RUN apt-get update
-RUN apt-get install -y build-essential curl openjdk-6-jdk
+RUN apt-get install -y build-essential curl openjdk-7-jdk
 
 # Download and Install HBase
-ENV HBASE_VERSION 0.94.11
+ENV HBASE_VERSION 0.98.5
+ENV HBASE_TAR hbase-$HBASE_VERSION-hadoop2-bin.tar.gz
 
-RUN mkdir -p /opt/downloads && cd /opt/downloads && curl -SsfLO "http://www.apache.org/dist/hbase/hbase-$HBASE_VERSION/hbase-$HBASE_VERSION.tar.gz"
-RUN cd /opt && tar xvfz /opt/downloads/hbase-$HBASE_VERSION.tar.gz
-RUN mv /opt/hbase-$HBASE_VERSION /opt/hbase
+RUN mkdir -p /opt/downloads && cd /opt/downloads && curl -SsfLO "http://www.apache.org/dist/hbase/hbase-$HBASE_VERSION/$HBASE_TAR"
+RUN cd /opt && tar xvfz /opt/downloads/$HBASE_TAR
+RUN mv /opt/hbase-$HBASE_VERSION-hadoop2 /opt/hbase
 
 # Data will go here (see hbase-site.xml)
 RUN mkdir -p /data/hbase /opt/hbase/logs
 
-ENV JAVA_HOME /usr/lib/jvm/java-6-openjdk-amd64
+ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
 ENV HBASE_SERVER /opt/hbase/bin/hbase
 
 ADD ./hbase-site.xml /opt/hbase/conf/hbase-site.xml
