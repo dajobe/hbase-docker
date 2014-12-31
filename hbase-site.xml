@@ -12,7 +12,7 @@
 
   <property>
     <name>hbase.master.dns.interface</name>
-    <value>eth0</value>
+    <value>default</value>
   </property>
   <property>
     <name>hbase.master.ipc.address</name>
@@ -21,7 +21,7 @@
 
   <property>
     <name>hbase.regionserver.dns.interface</name>
-    <value>eth0</value>
+    <value>default</value>
   </property>
   <property>
     <name>hbase.regionserver.ipc.address</name>
@@ -30,7 +30,7 @@
 
   <property>
     <name>hbase.zookeeper.dns.interface</name>
-    <value>eth0</value>
+    <value>default</value>
   </property>
 
 </configuration>
