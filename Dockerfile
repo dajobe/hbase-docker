@@ -14,7 +14,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Install build requirements
 RUN apt-get update
-RUN apt-get install -y build-essential curl openjdk-7-jdk
+RUN apt-get install -y build-essential curl openjdk-6-jdk
 
 # Download and Install HBase
 ENV HBASE_VERSION 0.94.26
