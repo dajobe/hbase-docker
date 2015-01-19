@@ -17,9 +17,9 @@ RUN apt-get update
 RUN apt-get install -y build-essential curl openjdk-6-jdk
 
 # Download and Install HBase
-ENV HBASE_VERSION 0.94.25
+ENV HBASE_VERSION 0.94.26
 
-RUN mkdir -p /opt/downloads && cd /opt/downloads && curl -SsfLO "https://dl.dropboxusercontent.com/u/91148410/SharedFiles/hbase-0.94.25.tar.gz"
+RUN mkdir -p /opt/downloads && cd /opt/downloads && curl -SsfLO "http://archive.apache.org/dist/hbase/hbase-$HBASE_VERSION/hbase-$HBASE_VERSION.tar.gz"
 RUN cd /opt && tar xvfz /opt/downloads/hbase-$HBASE_VERSION.tar.gz
 RUN mv /opt/hbase-$HBASE_VERSION /opt/hbase
 
