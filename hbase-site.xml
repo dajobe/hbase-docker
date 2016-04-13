@@ -3,7 +3,7 @@
 
   <property>
      <name>hbase.zookeeper.quorum</name>
-     <value>@IP@</value>
+     <value>hbase-docker</value>
   </property>
   <property>
     <name>hbase.rootdir</name>
@@ -16,7 +16,7 @@
   </property>
   <property>
     <name>hbase.master.ipc.address</name>
-    <value>@IP@</value>
+    <value>hbase-docker</value>
   </property>
 
   <property>
@@ -25,7 +25,7 @@
   </property>
   <property>
     <name>hbase.regionserver.ipc.address</name>
-    <value>@IP@</value>
+    <value>hbase-docker</value>
   </property>
 
   <property>

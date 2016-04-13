@@ -3,18 +3,21 @@
 #  1) thrift API/Web UI
 #  2) hbase master (which runs the local region server)
 
-IP=`ip addr show eth0 | grep 'inet ' | cut -d/ -f1 | awk '{print $2}'`
+logs_dir=/data/logs
 
-sed -i "s/@IP@/$IP/g" /opt/hbase/conf/hbase-site.xml
-
-sed -i "s/@IP@/$IP/g" /opt/hbase/conf/zoo.cfg
-
-echo "$IP $(hostname)" >> /etc/hosts
+mkdir -p $logs_dir /data/hbase /data/run
 
 # Thrift server (background)
 # Ports: 9090 API and 9095 UI
-$HBASE_SERVER thrift start > /opt/hbase/logs/hbase-thrift.log 2>&1 &
+echo "hbase thrift start logging to $logs_dir/hbase-thrift.log"
+hbase thrift start > $logs_dir/hbase-thrift.log 2>&1 &
+
+# REST server (background)
+# Ports: 8080 API
+echo "hbase rest start logging to $logs_dir/hbase-rest.log"
+hbase rest start > $logs_dir/hbase-rest.log 2>&1 &
 
 # Master server (Foreground) that also starts the region server
-# Ports: Master: 60000 API, 60010 UI; 2181 ZK;  Region: 60020 API, 60030 UI
-exec $HBASE_SERVER master start 2>&1 | tee /opt/hbase/logs/hbase-master.log
+# Ports: Master: 16000 API, 16010 UI; 2181 ZK;  Region: 16020 API, 16030 UI
+echo "hbase master start logging to $logs_dir/hbase-master.log"
+exec hbase master start 2>&1 | tee $logs_dir/hbase-master.log
