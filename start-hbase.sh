@@ -8,9 +8,10 @@
 #
 
 echo "Starting HBase container"
-rm -rf logs
-mkdir -p logs
-id=$(docker run -d -v $PWD/logs:/opt/hbase/logs -p :2181 -p :9090 -p :60000 -p :60020 dajobe/hbase)
+data_dir=$PWD/data
+rm -rf $data_dir
+mkdir -p $data_dir
+id=$(docker run --name=hbase-docker -h hbase-docker -d -v $data_dir:/data dajobe/hbase)
 
 echo "Container has ID $id"
 
@@ -28,7 +29,7 @@ else
 fi
 
 echo "Now connect to hbase at localhost on the standard ports"
-echo "  ZK 2181, Thrift 9090, Master 60000, Region 60020"
+echo "  ZK 2181, Thrift 9090, Master 16000, Region 16020"
 echo "Or connect to host hbase-docker (in the container) on the same ports"
 echo ""
 echo "For docker status:"
