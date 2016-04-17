@@ -11,26 +11,13 @@
   </property>
 
   <property>
-    <name>hbase.master.dns.interface</name>
-    <value>default</value>
-  </property>
-  <property>
-    <name>hbase.master.ipc.address</name>
+    <name>hbase.master.info.bindAddress</name>
     <value>hbase-docker</value>
   </property>
 
   <property>
-    <name>hbase.regionserver.dns.interface</name>
-    <value>default</value>
-  </property>
-  <property>
-    <name>hbase.regionserver.ipc.address</name>
+    <name>hbase.regionserver.info.bindAddress</name>
     <value>hbase-docker</value>
-  </property>
-
-  <property>
-    <name>hbase.zookeeper.dns.interface</name>
-    <value>default</value>
   </property>
 
 </configuration>
