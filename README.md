@@ -57,13 +57,19 @@ Master status if docker container DNS name is 'hbase-docker'
 
     http://hbase-docker:16010/master-status
 
-Region server status
-
-    http://hbase-docker:16030/rs-status
+The region servers status pages are linked from the above page.
 
 Thrift UI
 
     http://hbase-docker:9095/thrift.jsp
+
+REST server UI
+
+    http://hbase-docker:8085/rest.jsp
+
+(Embedded) Zookeeper status
+
+    http://hbase-docker:16010/zk.jsp
 
 
 See HBase Logs
@@ -163,8 +169,8 @@ these server-private urls in a local browser so here is a
     Host my-docker-server
     Hostname 1.2.3.4
         LocalForward 127.0.0.1:16010 127.0.0.1:16010
-        LocalForward 127.0.0.1:16030 127.0.0.1:16030
         LocalForward 127.0.0.1:9095 127.0.0.1:9095
+        LocalForward 127.0.0.1:8085 127.0.0.1:8085
 
 When you `ssh my-docker-server` ssh connects to the docker server and
 forwards request on your local machine on ports 16010 / 16030 to the
@@ -173,9 +179,9 @@ remote ports that are attached to the hbase container.
 The bottom line, you can use these URLs to see what's going on:
 
   * http://localhost:16010/master-status for the Master Server
-  * http://localhost:16030/rs-status for Region Server
   * http://localhost:9095/thrift.jsp for the thrift UI
-  * http://localhost:16030/zk.jsp for the embedded Zookeeper
+  * http://localhost:8085/rest.jsp for the REST server UI
+  * http://localhost:16010/zk.jsp for the embedded Zookeeper
 
 to see what's going on in the container and since both your local
 machine and the container are using localhost (aka 127.0.0.1), even

@@ -25,19 +25,15 @@ ADD ./hbase-server /opt/hbase-server
 
 # REST API
 EXPOSE 8080
+# REST Web UI at :8085/rest.jsp
+EXPOSE 8085
 # Thrift API
 EXPOSE 9090
-# Thrift Web UI
+# Thrift Web UI at :9095/thrift.jsp
 EXPOSE 9095
-# HBase's zookeeper - used to find servers
+# HBase's Embedded zookeeper cluster
 EXPOSE 2181
-## HBase Master API port ??
-#EXPOSE 16000
-# HBase Master web UI at :15010/master-status;  ZK at :16010/zk.jsp
+# HBase Master web UI at :16010/master-status;  ZK at :16010/zk.jsp
 EXPOSE 16010
-# Region server API port
-EXPOSE 16020
-# HBase Region server web UI at :16030/rs-status
-EXPOSE 16030
 
 CMD ["/opt/hbase-server"]
