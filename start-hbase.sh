@@ -23,7 +23,7 @@ rm -f config.json
 
 echo "Updating /etc/hosts to make hbase-docker point to $docker_ip ($docker_hostname)"
 if grep 'hbase-docker' /etc/hosts >/dev/null; then
-  sudo sed -i .bak "s/^.*hbase-docker.*\$/$docker_ip hbase-docker $docker_hostname/" /etc/hosts
+  sudo sed -i.bak "s/^.*hbase-docker.*\$/$docker_ip hbase-docker $docker_hostname/" /etc/hosts
 else
   sudo sh -c "echo '$docker_ip hbase-docker $docker_hostname' >> /etc/hosts"
 fi
