@@ -24,4 +24,4 @@ HBASE_BUILD_PACKAGES="curl"
 #HBASE_BUILD_PACKAGES="$HBASE_BUILD_PACKAGES "
 
 ## Run time dependencies ##
-HBASE_RUN_PACKAGES="openjdk-7-jdk"
+HBASE_RUN_PACKAGES="openjdk-8-jdk"
