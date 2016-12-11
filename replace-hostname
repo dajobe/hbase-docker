@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# Script that replaces the default hostname in files with the environments
+# ${HOSTNAME} variable.
+#
+# This script is intended to be run before starting hbase-server to ensure
+# that the hostname matches the configured environment variable. i.e.
+# the -h --hostname flag.
+#
+declare -a files=(
+	'/opt/hbase/conf/hbase-site.xml'
+	'/opt/hbase/conf/zoo.cfg'
+)
+
+for file in "${files[@]}"; do
+	if [ -f "${file}.bak" ]; then
+		cp "${file}.bak" "${file}"
+	else
+		cp "${file}" "${file}.bak"
+	fi
+
+	sed -i "s/hbase-docker/${HOSTNAME}/g" "${file}"
+done

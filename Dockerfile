@@ -21,6 +21,8 @@ ADD ./hbase-site.xml /opt/hbase/conf/hbase-site.xml
 
 ADD ./zoo.cfg /opt/hbase/conf/zoo.cfg
 
+ADD ./replace-hostname /opt/replace-hostname
+
 ADD ./hbase-server /opt/hbase-server
 
 # REST API
