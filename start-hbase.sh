@@ -17,8 +17,8 @@ echo "Container has ID $id"
 
 # Get the hostname and IP inside the container
 docker inspect $id > config.json
-docker_hostname=`python -c 'import json; c=json.load(open("config.json")); print c[0]["Config"]["Hostname"]'`
-docker_ip=`python -c 'import json; c=json.load(open("config.json")); print c[0]["NetworkSettings"]["IPAddress"]'`
+docker_hostname=$(python -c 'from __future__ import print_function; import json; c=json.load(open("config.json")); print(c[0]["Config"]["Hostname"])')
+docker_ip=$(python -c 'from __future__ import print_function; import json; c=json.load(open("config.json")); print(c[0]["NetworkSettings"]["IPAddress"])')
 rm -f config.json
 
 echo "Updating /etc/hosts to make hbase-docker point to $docker_ip ($docker_hostname)"
