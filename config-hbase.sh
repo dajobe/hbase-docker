@@ -2,7 +2,11 @@
 
 # . /build/config.sh
 
+# This is the definitive site and incredibly slow
 HBASE_DIST="http://archive.apache.org/dist/hbase"
+# This is a mirror site and faster but every new release breaks all
+# existing links.
+# HBASE_DIST="https://www-us.apache.org/dist/hbase"
 
 # Prevent initramfs updates from trying to run grub and lilo.
 export INITRD=no
