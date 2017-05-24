@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh -xe
 
 . /build/config-hbase.sh
 
