@@ -12,6 +12,9 @@ declare -a files=(
 	'/opt/hbase/conf/zoo.cfg'
 )
 
+# enable custom replacement (e.g. service name on k8s)
+REPLACEMENT=${HBASE_SERVICE_NAME:-$HOSTNAME}
+
 for file in "${files[@]}"; do
 	if [ -f "${file}.bak" ]; then
 		cp "${file}.bak" "${file}"
@@ -19,5 +22,5 @@ for file in "${files[@]}"; do
 		cp "${file}" "${file}.bak"
 	fi
 
-	sed -i "s/hbase-docker/${HOSTNAME}/g" "${file}"
+	sed -i "s/hbase-docker/${REPLACEMENT}/g" "${file}"
 done
