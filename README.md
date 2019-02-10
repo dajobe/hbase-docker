@@ -105,37 +105,22 @@ Here I am connecting to a docker container with the name 'hbase-docker'
 (such as created by the start-hbase.sh script).  The port 9090 is the
 Thrift API port because [Happybase][1] [2] uses Thrift to talk to HBase.
 
-    $ ipython
-    Python 2.7.9 (default, Mar  1 2015, 12:57:24)
-    Type "copyright", "credits" or "license" for more information.
-    
-    IPython 2.3.0 -- An enhanced Interactive Python.
-    ?         -> Introduction and overview of IPython's features.
-    %quickref -> Quick reference.
-    help      -> Python's own help system.
-    object?   -> Details about 'object', use 'object??' for extra details.
-    
-    In [1]: import happybase
-    
-    In [2]: connection = happybase.Connection('hbase-docker', 9090)
-    
-    In [3]: connection.create_table('table-name', { 'family': dict() } )
-    
-    In [4]: connection.tables()
-    Out[4]: ['table-name']
-    
-    In [5]: table = connection.table('table-name')
-    
-    In [6]: table.put('row-key', {'family:qual1': 'value1', 'family:qual2': 'value2'})
-    
-    In [7]: for k, data in table.scan():
-       ...:     print k, data
-       ...:
-    row-key {'family:qual1': 'value1', 'family:qual2': 'value2'}
-    
-    In [8]:
-    Do you really want to exit ([y]/n)? y
-    $
+	$ python
+	Python 2.7.15 (default, Jan 12 2019, 21:07:57)
+	[GCC 4.2.1 Compatible Apple LLVM 10.0.0 (clang-1000.11.45.5)] on darwin
+	Type "help", "copyright", "credits" or "license" for more information.
+	>>> import happybase
+	>>> connection = happybase.Connection('hbase-docker', 9090)
+	>>> connection.create_table('table-name', { 'family': dict() } )
+	>>> connection.tables()
+	['table-name']
+	>>> table = connection.table('table-name')
+	>>> table.put('row-key', {'family:qual1': 'value1', 'family:qual2': 'value2'})
+	>>> for k, data in table.scan():
+	...   print k, data
+	...
+	row-key {'family:qual1': 'value1', 'family:qual2': 'value2'}
+	>>>
 
 (Simple install for happybase: `sudo pip install happybase` although I
 use `pip install --user happybase` to get it just for me)
@@ -145,17 +130,22 @@ Test HBase is working from Java
 -------------------------------
 
     $ docker run --rm -it --link $id:hbase-docker dajobe/hbase hbase shell
-    HBase Shell; enter 'help<RETURN>' for list of supported commands.
-    Type "exit<RETURN>" to leave the HBase Shell
-    Version 0.94.11, r1513697, Wed Aug 14 04:54:46 UTC 2013
-
-    hbase(main):001:0> status
-    1 servers, 0 dead, 3.0000 average load
-
-    hbase(main):002:0> list
-    TABLE
-    table-name
-    1 row(s) in 0.0460 seconds
+	HBase Shell
+	Use "help" to get list of supported commands.
+	Use "exit" to quit this interactive shell.
+	For Reference, please visit: http://hbase.apache.org/2.0/book.html#shell
+	Version 2.1.2, r1dfc418f77801fbfb59a125756891b9100c1fc6d, Sun Dec 30 21:45:09 PST 2018
+	Took 0.0472 seconds
+	hbase(main):001:0> status
+	1 active master, 0 backup masters, 1 servers, 0 dead, 2.0000 average load
+	Took 0.7255 seconds
+	hbase(main):002:0> list
+	TABLE
+	table-name
+	1 row(s)
+	Took 0.0509 seconds
+	=> ["table-name"]
+    hbase(main):003:0>
 
 Showing the `table-name` table made in the happybase example above.
 
