@@ -53,6 +53,9 @@ If you want to run multiple hbase dockers on the same host, you can
 give them different hostnames with the '-h' / '--hostname' argument.
 You may have to give them different ports though.  Not tested.
 
+If you want to customize the hostname used, set the
+`HBASE_DOCKER_HOSTNAME` envariable on the docker command line
+
 
 Find Hbase status
 -----------------
