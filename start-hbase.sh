@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 #
 # Script to start docker and update the /etc/hosts file to point to
 # the hbase-docker container
