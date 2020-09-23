@@ -42,21 +42,22 @@ def main():
   logging.basicConfig()
   #logging.basicConfig(level=logging.DEBUG)
 
-  print('Starting HBase container')
   cwd = os.getcwd()
   data_dir = os.path.join(cwd, 'data')
 
   # Set up data directory
-  rmtree(data_dir, ignore_errors=False)
+  if os.path.exists(data_dir):
+    rmtree(data_dir, ignore_errors=False)
   if not os.path.exists(data_dir):
     os.makedirs(data_dir)
 
   # force kill any existing container
   cmd = ['docker', 'rm', '-f', CONTAINER_NAME]
   logging.debug(cmd)
-  # Do not care about stderr (or exit code)
-  run(cmd, stderr=None, check=False)
+  # Do not care about output (or exit code)
+  run(cmd, check=False)
 
+  print('Starting HBase container')
   cmd = ['docker', 'run',
 	 f'--name={CONTAINER_NAME}', '-h', CONTAINER_NAME,
 	 '-d', '-P', '-v', f'{data_dir}:{DATA_DIR_IN_CONTAINER}', IMAGE_NAME]
