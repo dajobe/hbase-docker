@@ -35,19 +35,44 @@ More details at https://hub.docker.com/r/dajobe/hbase/
 Run HBase
 ---------
 
-To run HBase by hand:
+I recommend using the start-hbase.sh script which will start the
+container and inspect it to determine all the local API ports and Web
+UIs plus will offer to edit /etc/hosts to add an alias for the
+container IP, if not already present.
+
+	$ ./start-hbase.sh
+	start-hbase.sh: Starting HBase container
+	start-hbase.sh: Container has ID b2db2fb3c3a67e20e2addd5e4d2ffc9a51abaafc3f9b36f464af7739e82f6446
+	start-hbase.sh: /etc/hosts already contains hbase-docker hostname and IP
+	start-hbase.sh: Connect to HBase at localhost on these ports
+	  REST API             127.0.0.1:32874
+	  Rest Web UI          http://127.0.0.1:32873/
+	  Thrift API           127.0.0.1:32872
+	  Thrift Web UI        http://127.0.0.1:32871/
+	  HBase ZK             127.0.0.1:32875
+	  HBase Master Web UI  http://127.0.0.1:32870/
+
+	start-hbase.sh: OR Connect to HBase on container hbase-docker
+	  REST API             hbase-docker:8080
+	  Rest Web UI          http://hbase-docker:8085/
+	  Thrift API           hbase-docker:9090
+	  Thrift Web UI        http://hbase-docker:9095/
+	  HBase ZK             hbase-docker:2181
+	  HBase Master Web UI  http://hbase-docker:16010/
+
+	start-hbase.sh: For docker status:
+	start-hbase.sh: $ id=b2db2fb3c3a67e20e2addd5e4d2ffc9a51abaafc3f9b36f464af7739e82f6446
+	start-hbase.sh: $ docker inspect $id
+
+The localhost ports on the Host machine listed above 32870-32874 will
+vary for every container and are ephemeral ports.
+
+Alternatively, to run HBase by hand:
 
     $ mkdir data
     $ id=$(docker run --name=hbase-docker -h hbase-docker -d -v $PWD/data:/data dajobe/hbase)
 
-To run it and adjust the host system's locally by editing
-`/etc/hosts` to alias the DNS hostname 'hbase-docker' to the
-container, use this:
-
-    $ ./start-hbase.sh
-
-This will require you to enter your sudo password to edit the host
-machine's `/etc/hosts` file
+and you will have to `docker inspect $id` to find all the ports.
 
 If you want to run multiple hbase dockers on the same host, you can
 give them different hostnames with the '-h' / '--hostname' argument.
@@ -101,25 +126,26 @@ the data volume dir eg $PWD/data/logs if invoked as above.
 Test HBase is working via python over Thrift
 --------------------------------------------
 
-Here I am connecting to a docker container with the name 'hbase-docker'
-(such as created by the start-hbase.sh script).  The port 9090 is the
-Thrift API port because [Happybase][1] [2] uses Thrift to talk to HBase.
+Here I am connecting to a the container's thrift API port (such as
+created by the start-hbase.sh script).  The port 32872 is the Thrift
+API port exported to the host because [Happybase][1] [2] uses Thrift
+to talk to HBase.
 
-	$ python
-	Python 2.7.15 (default, Jan 12 2019, 21:07:57)
-	[GCC 4.2.1 Compatible Apple LLVM 10.0.0 (clang-1000.11.45.5)] on darwin
+	$ python3
+	Python 3.8.5 (default, Jul 21 2020, 10:48:26)
+	[Clang 11.0.3 (clang-1103.0.32.62)] on darwin
 	Type "help", "copyright", "credits" or "license" for more information.
 	>>> import happybase
-	>>> connection = happybase.Connection('hbase-docker', 9090)
+	>>> connection = happybase.Connection('127.0.0.1', 32872)
 	>>> connection.create_table('table-name', { 'family': dict() } )
 	>>> connection.tables()
-	['table-name']
+	[b'table-name']
 	>>> table = connection.table('table-name')
 	>>> table.put('row-key', {'family:qual1': 'value1', 'family:qual2': 'value2'})
 	>>> for k, data in table.scan():
-	...   print k, data
+	...   print(k, data)
 	...
-	row-key {'family:qual1': 'value1', 'family:qual2': 'value2'}
+	b'row-key' {b'family:qual1': b'value1', b'family:qual2': b'value2'}
 	>>>
 
 (Simple install for happybase: `sudo pip install happybase` although I
