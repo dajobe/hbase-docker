@@ -39,7 +39,7 @@ else
   echo "$program: Updating /etc/hosts to make ${docker_hostname} point to $docker_ip ($docker_hostname)"
   echo "$program: Running sudo - expect to type your password"
   if [ "$hosts_hbase_docker_ip" == "" ]; then
-    echo "docker_ip ${CONTAINER_NAME} $docker_hostname" | \
+    echo "$docker_ip ${CONTAINER_NAME} $docker_hostname" | \
       sudo tee -a /etc/hosts > /dev/null
   else
     sudo sed -i.bak "s/^.*${CONTAINER_NAME}.*\$/$docker_ip ${CONTAINER_NAME} $docker_hostname/" /etc/hosts
